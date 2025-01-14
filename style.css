@@ -1,0 +1,101 @@
+.warna1{
+    background-color: #005b8f;
+}
+
+
+.banner{
+    height: 75vh;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('dashboard/img/back2.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+.highlighted-kategori{
+    height: 250px;
+}
+
+.kategori-dystopia{
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('dashboard/img/html.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+.kategori-translate{
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('dashboard/img/translate.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+.no-decoration{
+    text-decoration: none;
+    color: white;
+}
+
+.no-decoration:hover{
+    color: #005b8f;
+}
+
+
+.image-box {
+    height: 230px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden; 
+    background-color: #f8f9fa; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.image-box img {
+    height: 180px;
+    width: auto;
+    object-fit: cover;
+    object-position: center; 
+}
+
+.content-subscribe{
+    background-color: #4a8cb3;
+}
+
+.content-subscribe a{
+    color: white;
+}
+
+.banner2{
+    height: 30vh;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('dashboard/img/back2.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+.produk-image{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: solid gray;
+}
+
+.ulasan-text {
+    max-height: 50px;
+    overflow-y: auto;   
+    white-space: normal;
+}
+
+.navbar-nav .nav-item .nav-link.active {
+    color: #fff;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #005b8f;
+}
+
+::-webkit-scrollbar-track {
+    background-color: black;
+    width: 50px;
+}
