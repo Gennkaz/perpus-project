@@ -21,12 +21,22 @@ $keyword = isset($_GET['keyword']) ? mysqli_real_escape_string($conn, $_GET['key
     <link rel="stylesheet" href="style.css?version=1.4">
 </head>
 
+<style>
+    #banner {
+        background-size: cover;
+        background-position: center;
+        height: 75vh;
+        transition: background-image 1s ease-in-out;
+    }
+</style>
+
+
 <body>
     <?php
     require "navbar.php";
     ?>
 
-    <div class="container-fluid banner d-flex align-items-center">
+    <div class="container-fluid banner d-flex align-items-center" id="banner">
         <div class="container text-center text-white">
             <h1>Selamat Datang Di Perpustakaan Fakultas Teknik</h1>
             <h1>Universitas Majalengka</h1>
@@ -181,6 +191,22 @@ $keyword = isset($_GET['keyword']) ? mysqli_real_escape_string($conn, $_GET['key
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"></script>
+    <script>
+        const backgroundImages = [
+            'back2.jpeg',
+            'jam.jpg',
+            'ocean.jpg'
+        ];
+        function changeBackground() {
+            const randomImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+
+            document.getElementById('banner').style.backgroundImage = `url('dashboard/img/${randomImage}')`;
+        }
+
+        changeBackground();
+
+        setInterval(changeBackground, 8000);
+    </script>
 </body>
 
 </html>
