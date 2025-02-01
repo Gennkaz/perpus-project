@@ -70,7 +70,7 @@ include "get_gambar.php";
                                 $resultPeminjaman = $conn->query($queryPeminjaman);
 
                                 if ($resultPeminjaman->num_rows == 0) {
-                                    echo '<tr><td colspan="8" class="text-center">List Buku yang dipinjam Tidak Tersedia!</td></tr>';
+                                    echo '<tr><td colspan="8" class="text-center">List Buku yang didenda Tidak Tersedia!</td></tr>';
                                 } else {
                                     $jumlah = 1;
                                     $dataFound = false;
@@ -108,7 +108,7 @@ include "get_gambar.php";
                                     }
 
                                     if (!$dataFound) {
-                                        echo '<tr><td colspan="8" class="text-center">List Buku yang harus dikonfirmasi Tidak Tersedia!</td></tr>';
+                                        echo '<tr><td colspan="8" class="text-center">List Buku yang harus dikonfirmasi denda Tidak Tersedia!</td></tr>';
                                     }
                                 }
                                 ?>

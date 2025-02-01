@@ -187,7 +187,7 @@ $count = mysqli_num_rows($sql);
 
     <div class="print-actions">
         <a href="daftar_kunjungan.php" class="print-button">Kembali</a>
-        <a href="javascript:window.print()" class="print-button">Cetak Laporan</a>
+        <a href="javascript:window.print()" class="print-button">Cetak Kunjungan</a>
     </div>
 
 </body>

@@ -125,7 +125,7 @@ if (!empty($filter_tanggal)) {
                             <button type="submit" class="btn btn-primary me-3"><i class="fas fa-filter me-2"></i>Filter</button>
                             <a href="daftar_kunjungan.php" class="btn btn-light me-3"><i class="fas fa-sync-alt me-2"></i>Reset</a>
                             <a href="cetak_kunjungan.php?filter_keperluan=<?= $filter_keperluan ?>&filter_tanggal=<?= $filter_tanggal ?>" class="btn btn-primary">
-                                <i class="fas fa-print me-2"></i>Print
+                                <i class="fas fa-print me-2"></i>Cetak
                             </a>
                         </div>
 

@@ -52,7 +52,7 @@ if (isset($_GET['id'])) {
                     <label for="TanggalPengembalian" class="mb-2">Tanggal Pengembalian</label>
                     <!-- Tanggal Pengembalian otomatis diisi dengan tanggal hari ini -->
                     <input type="date" name="TanggalPengembalian" id="TanggalPengembalian" class="form-control"
-                        value="<?php echo ($data['TanggalPengembalian']) ? htmlspecialchars($data['TanggalPengembalian']) : date('Y-m-d'); ?>" 
+                        value="<?php echo ($data['TanggalPengembalian']) ? htmlspecialchars($data['TanggalPengembalian']) : date('Y-m-d'); ?>"
                         <?php echo ($data['StatusPeminjaman'] == 'dikembalikan') ? 'readonly' : ''; ?> />
                 </div>
                 <div class="my-2">
@@ -75,6 +75,27 @@ if (isset($_GET['id'])) {
             </form>
 
             <?php
+            function updateStock($bukuID, $conn)
+            {
+                $sqlGetJumlahBuku = "SELECT JumlahBuku FROM buku WHERE BukuID = $bukuID";
+                $result = $conn->query($sqlGetJumlahBuku);
+                $row = $result->fetch_assoc();
+
+                if ($row) {
+                    $jumlahBukuSaatIni = $row['JumlahBuku'];
+                    $jumlahBukuBaru = $jumlahBukuSaatIni + 1;
+
+                    $sqlUpdateBuku = "UPDATE buku SET JumlahBuku = $jumlahBukuBaru WHERE BukuID = $bukuID";
+                    if ($conn->query($sqlUpdateBuku) === TRUE) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+
             if (isset($_POST['simpan'])) {
                 $tanggalPengembalian = $_POST['TanggalPengembalian'];
                 $statusPeminjaman = $_POST['StatusPeminjaman'];
@@ -84,37 +105,15 @@ if (isset($_GET['id'])) {
 
                 if ($conn->query($sqlUpdate) === TRUE) {
                     if ($statusPeminjaman == 'dikembalikan') {
-                        $sqlGetJumlahBuku = "SELECT JumlahBuku FROM buku WHERE BukuID = $bukuID";
-                        $result = $conn->query($sqlGetJumlahBuku);
-                        $row = $result->fetch_assoc();
-
-                        if ($row) {
-                            $jumlahBukuSaatIni = $row['JumlahBuku'];
-                            $jumlahBukuBaru = $jumlahBukuSaatIni + 1;
-
-                            $sqlUpdateBuku = "UPDATE buku SET JumlahBuku = $jumlahBukuBaru WHERE BukuID = $bukuID";
-                            if ($conn->query($sqlUpdateBuku) === TRUE) {
-            ?>
-                                <div class="alert alert-primary mt-3" role="alert">
-                                    Data peminjaman berhasil diperbarui!
-                                </div>
-
-                                <meta http-equiv="refresh" content="1; url=denda_konfirmasi.php" />
-                        <?php
-                            } else {
-                                echo '<div class="alert alert-danger">Gagal memperbarui jumlah buku: ' . $conn->error . '</div>';
-                            }
+                        if (updateStock($bukuID, $conn)) {
+                            echo '<div class="alert alert-primary mt-3" role="alert">Data peminjaman berhasil diperbarui!</div>';
+                            echo '<meta http-equiv="refresh" content="1; url=denda_konfirmasi.php" />';
                         } else {
-                            echo '<div class="alert alert-warning">Buku tidak ditemukan.</div>';
+                            echo '<div class="alert alert-danger">Gagal memperbarui jumlah buku.</div>';
                         }
                     } else {
-                        ?>
-                        <div class="alert alert-primary mt-3" role="alert">
-                            Data peminjaman berhasil diperbarui!
-                        </div>
-
-                        <meta http-equiv="refresh" content="1; url=denda_konfirmasi.php" />
-            <?php
+                        echo '<div class="alert alert-primary mt-3" role="alert">Data peminjaman berhasil diperbarui!</div>';
+                        echo '<meta http-equiv="refresh" content="1; url=denda_konfirmasi.php" />';
                     }
                 } else {
                     echo '<div class="alert alert-danger">Gagal memperbarui data: ' . $conn->error . '</div>';
@@ -122,12 +121,18 @@ if (isset($_GET['id'])) {
             }
 
             if (isset($_POST['hapus'])) {
-                $sqlDelete = "DELETE FROM peminjaman WHERE PeminjamanID = $peminjamanID";
-                if ($conn->query($sqlDelete) === TRUE) {
-                    echo "<script>alert('Peminjaman berhasil dihapus!');</script>";
-                    echo '<meta http-equiv="refresh" content="1; url=denda_konfirmasi.php" />';
+                $bukuID = $data['BukuID'];
+
+                if (updateStock($bukuID, $conn)) {
+                    $sqlDelete = "DELETE FROM peminjaman WHERE PeminjamanID = $peminjamanID";
+                    if ($conn->query($sqlDelete) === TRUE) {
+                        echo "<script>alert('Peminjaman berhasil dihapus!');</script>";
+                        echo '<meta http-equiv="refresh" content="1; url=denda_konfirmasi.php" />';
+                    } else {
+                        echo '<div class="alert alert-danger">Gagal menghapus peminjaman: ' . $conn->error . '</div>';
+                    }
                 } else {
-                    echo '<div class="alert alert-danger">Gagal menghapus peminjaman: ' . $conn->error . '</div>';
+                    echo '<div class="alert alert-danger">Gagal memperbarui jumlah buku sebelum menghapus peminjaman.</div>';
                 }
             }
             ?>

@@ -50,11 +50,17 @@ if (isset($_POST['add_to_favorites'])) {
         $bukuID = $_POST['BukuID'];
         $userID = $_SESSION['user']['UserID'];
 
-        $insertQuery = "INSERT INTO koleksipribadi (UserID, BukuID) VALUES ('$userID', '$bukuID')";
-        if (mysqli_query($conn, $insertQuery)) {
-            echo "<script>alert('Buku telah ditambahkan ke koleksi favorit!');</script>";
+        $checkQuery = mysqli_query($conn, "SELECT * FROM koleksipribadi WHERE UserID='$userID' AND BukuID='$bukuID'");
+        
+        if (mysqli_num_rows($checkQuery) > 0) {
+            echo "<script>alert('Buku ini sudah ada di koleksi favorit Anda.');</script>";
         } else {
-            echo "<script>alert('Gagal menambahkan buku ke koleksi favorit.');</script>";
+            $insertQuery = "INSERT INTO koleksipribadi (UserID, BukuID) VALUES ('$userID', '$bukuID')";
+            if (mysqli_query($conn, $insertQuery)) {
+                echo "<script>alert('Buku telah ditambahkan ke koleksi favorit!');</script>";
+            } else {
+                echo "<script>alert('Gagal menambahkan buku ke koleksi favorit.');</script>";
+            }
         }
     } else {
         echo "<script>alert('Silakan login untuk menambahkan buku ke koleksi favorit.');</script>";
@@ -126,9 +132,9 @@ if (isset($_POST['add_to_favorites'])) {
                                             </button>
                                         </form>
 
-                                        <a href="peminjaman.php?BukuID=<?php echo urlencode($data['BukuID']); ?>&Judul=<?php echo urlencode($data['Judul']); ?>" class="btn btn-primary">Pinjam</a>
+                                        <a href="dashboard/peminjaman.php?BukuID=<?php echo urlencode($data['BukuID']); ?>&Judul=<?php echo urlencode($data['Judul']); ?>" class="btn btn-primary">Pinjam</a>
                                     <?php else: ?>
-                                        <a href="login.php" class="btn btn-primary">Login untuk Pinjam</a>
+                                        <a href="dashboard/login.php" class="btn btn-primary">Login untuk Pinjam</a>
                                     <?php endif; ?>
                                 </div>
                             </div>

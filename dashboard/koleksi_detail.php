@@ -38,7 +38,7 @@ $data = mysqli_fetch_assoc($query);
 <body style="background-color: black;">
     <div class="main d-flex justify-content-center mt-5">
         <div class="login-box p-4">
-            <h3 style="color: red;">Edit dan Hapus Koleksi Buku</h3>
+            <h3 style="color: #005b8f;">Edit dan Hapus Koleksi Buku</h3>
 
             <form action="" method="post" style="color: white;">
                 <div class="my-3">
@@ -58,7 +58,7 @@ $data = mysqli_fetch_assoc($query);
                     <button type="submit" class="btn btn-danger mt-2" name="hapus">Delete</button>
                 </div>
                 <div class="my-2">
-                    <a href="koleksi.php" style="color: red;">Kembali</a>
+                    <a href="koleksi.php" style="color: #005b8f;">Kembali</a>
                 </div>
             </form>
 
